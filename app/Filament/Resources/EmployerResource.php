@@ -29,9 +29,9 @@ class EmployerResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('logo')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\FileUpload::make('logo')
+                    ->image()
+                    ->required(),
                 Forms\Components\TextInput::make('job_count')
                     ->required()
                     ->numeric()

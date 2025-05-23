@@ -19,14 +19,14 @@
                 </a>
             </div>
             <div class="space-x-6 font-bold">
-                <a href="">Jobs</a>
-                <a href="">Careers</a>
-                <a href="">Salaries</a>
-                <a href="">Companies</a>
+                <a href="/">Jobs</a>
+                <a href="/jobs/salaries">Salaries</a>
+                <a href="/employers">Companies</a>
             </div>
 
             @auth
                 <div class="space-x-6 font-bold flex">
+                    <a href="/my-jobs">My Jobs</a>
                     <a href="/jobs/create">Post a Job</a>
                     <form method="POST" action="/logout">
                         @csrf
