@@ -17,6 +17,6 @@ class SendJobCreatedEmail
         // Exemplo: enviar email para o employer dono da vaga
         $user = $job->employer->user;
 
-        Mail::to($user->email)->send(new JobCreatedMail($job));
+        Mail::to($user->email)->queue(new JobCreatedMail($job));
     }
 }
