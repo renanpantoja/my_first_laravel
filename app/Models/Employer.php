@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Employer extends Model
 {
@@ -19,5 +20,20 @@ class Employer extends Model
     public function jobs(): HasMany
     {
         return $this->hasMany(Job::class);
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(function ($employer) {
+            $employer->slug = Str::slug($employer->name);
+
+            // Se já existir, adiciona um número para garantir unicidade
+            $originalSlug = $employer->slug;
+            $count = 1;
+
+            while (static::where('slug', $employer->slug)->exists()) {
+                $employer->slug = $originalSlug . '-' . $count++;
+            }
+        });
     }
 }

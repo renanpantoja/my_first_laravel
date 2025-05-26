@@ -22,7 +22,7 @@ use App\Http\Controllers\TagController;
 
 Route::get('/', [JobController::class, 'index']);
 Route::get('/employers', [EmployerController::class, 'index'])->name('employers.index');
-Route::get('/employers/{employer}/jobs', [EmployerController::class, 'jobs'])->name('employers.jobs');
+Route::get('/employers/{employer:slug}/jobs', [EmployerController::class, 'jobs'])->name('employers.jobs');
 Route::get('/jobs/salaries', [JobController::class, 'salaries'])->name('jobs.salaries');
 Route::get('/jobs/salary/{salary}', [JobController::class, 'jobsBySalary'])->name('jobs.bySalary');
 

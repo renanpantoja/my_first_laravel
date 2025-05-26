@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class);
             $table->string('name');
+            $table->string('slug')->unique();
             $table->string('logo');
             $table->unsignedInteger('job_count')->default(0);
             $table->timestamps();
