@@ -28,13 +28,13 @@ class JobStoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'title.required' => 'O título é obrigatório.',
-            'salary.required' => 'O salário é obrigatório.',
-            'location.required' => 'A localização é obrigatória.',
-            'schedule.required' => 'O tipo de trabalho é obrigatório.',
-            'schedule.in' => 'O tipo de trabalho deve ser "Part Time" ou "Full Time".',
-            'url.required' => 'O campo URL é obrigatório.',
-            'url.active_url' => 'A URL fornecida não é válida.',
-        ];
+            'title.required' => 'The title is required.',
+            'salary.required' => 'The salary is required.',
+            'location.required' => 'The location is required.',
+            'schedule.required' => 'The job type is required.',
+            'schedule.in' => 'The job type must be either "Part Time" or "Full Time".',
+            'url.required' => 'The URL field is required.',
+            'url.active_url' => 'The provided URL is not valid.',
+        ];        
     }
 }

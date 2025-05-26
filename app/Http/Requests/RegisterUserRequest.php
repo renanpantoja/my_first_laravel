@@ -22,10 +22,10 @@ class RegisterUserRequest extends FormRequest
                 'required',
                 'confirmed',
                 Password::min(8)
-/*                     ->letters()
+                    ->letters()
                     ->mixedCase()
                     ->numbers()
-                    ->symbols(), */
+                    ->symbols(),
             ],
             'employer' => ['required'],
             'logo' => ['required', File::types(['png', 'jpg', 'webp', 'svg']), 'max:2048'],
@@ -35,16 +35,16 @@ class RegisterUserRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'O nome é obrigatório.',
-            'email.required' => 'O e-mail é obrigatório.',
-            'email.email' => 'O e-mail deve ser válido.',
-            'email.unique' => 'Este e-mail já está em uso.',
-            'password.required' => 'A senha é obrigatória.',
-            'password.confirmed' => 'As senhas não coincidem.',
-            'employer.required' => 'O nome do empregador é obrigatório.',
-            'logo.required' => 'O envio de uma logo é obrigatório.',
-            'logo.max' => 'A imagem deve ter no máximo 2MB.',
-            'logo.mimes' => 'A imagem deve ser do tipo png, jpg ou webp.',
-        ];
+            'name.required' => 'The name is required.',
+            'email.required' => 'The email is required.',
+            'email.email' => 'The email must be a valid email address.',
+            'email.unique' => 'This email is already in use.',
+            'password.required' => 'The password is required.',
+            'password.confirmed' => 'The passwords do not match.',
+            'employer.required' => 'The employer name is required.',
+            'logo.required' => 'The logo upload is required.',
+            'logo.max' => 'The image must be at most 2MB.',
+            'logo.mimes' => 'The image must be a file of type: png, jpg, or webp.',
+        ];        
     }
 }

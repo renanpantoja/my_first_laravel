@@ -36,7 +36,7 @@
                     </svg>
                 </a>
 
-                <form action="{{ route('jobs.destroy', $job) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar?')">
+                <form action="{{ route('jobs.destroy', $job) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete?')">
                     @csrf
                     @method('DELETE')
                     <button type="submit" 

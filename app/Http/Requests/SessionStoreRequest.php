@@ -24,10 +24,10 @@ class SessionStoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'O campo email é obrigatório.',
-            'email.email' => 'O email fornecido não é válido.',
-            'password.required' => 'O campo senha é obrigatório.',
-        ];
+            'email.required' => 'The email field is required.',
+            'email.email' => 'The provided email is not valid.',
+            'password.required' => 'The password field is required.',
+        ];        
     }
 
     public function authenticate(): void

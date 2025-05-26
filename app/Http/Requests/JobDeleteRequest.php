@@ -9,14 +9,13 @@ class JobDeleteRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        $job = $this->route('job'); // pega o job da rota
+        $job = $this->route('job');
 
-        // Verifica se o job pertence à empresa do usuário logado
         return Auth::check() && $job->employer->user_id === Auth::id();
     }
 
     public function rules(): array
     {
-        return []; // Nenhuma regra de validação específica para deletar
+        return [];
     }
 }

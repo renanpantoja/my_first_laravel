@@ -27,7 +27,6 @@ class Employer extends Model
         static::creating(function ($employer) {
             $employer->slug = Str::slug($employer->name);
 
-            // Se já existir, adiciona um número para garantir unicidade
             $originalSlug = $employer->slug;
             $count = 1;
 

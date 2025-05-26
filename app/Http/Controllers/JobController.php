@@ -63,7 +63,6 @@ class JobController extends Controller
 
     public function salaries()
     {
-        // Pega os salários únicos das vagas, ordenados (exemplo: crescente)
         $salaries = Job::select('salary')
             ->distinct()
             ->orderBy('salary')
@@ -100,7 +99,7 @@ class JobController extends Controller
         return view('results', [
             'jobs' => $jobs,
             'employer' => $employer,
-            'myJobs' => true, // sinaliza no blade que é do usuário logado
+            'myJobs' => true,
         ]);
     }
 
@@ -127,7 +126,6 @@ class JobController extends Controller
         $attributes = $request->validated();
         $attributes['featured'] = $request->has('featured');
     
-        // Remove 'tags' do array antes de atualizar o job
         $attributes = Arr::except($attributes, ['tags']);
     
         $job->update($attributes);
