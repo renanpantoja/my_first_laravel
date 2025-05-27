@@ -22,12 +22,21 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::latest()->with(['employer', 'tags'])->get()->groupBy('featured');
+        //$jobs = Job::latest()->with(['employer', 'tags'])->get()->groupBy('featured');
+        $featuredJobs = Job::where('featured', true)
+            ->latest()
+            ->with(['employer', 'tags'])
+            ->get();
+
+        $jobs = Job::where('featured', false)
+            ->latest()
+            ->with(['employer', 'tags'])
+            ->paginate(5);
 
         return view('jobs.index', [
-            'featuredJobs' => $jobs[1],
-            'jobs' => $jobs[0],
-            'tags' => Tag::all()
+            'featuredJobs' => $featuredJobs,
+            'jobs' => $jobs,
+            'tags' => Tag::all(),
         ]);
     }
 

@@ -10,15 +10,14 @@ class FilamentAdminMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        $user = Auth::user();
+        $user = Auth::guard('filament')->user();
 
         if (! $user || ! $user->is_admin) {
-            Auth::logout();
+            Auth::guard('filament')->logout();
 
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            //return redirect('/admin/login');
             abort(403, 'Access denied: Not administrator.');
         }
 

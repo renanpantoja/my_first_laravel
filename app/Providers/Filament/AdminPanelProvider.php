@@ -22,10 +22,14 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        return $panel
+
+        config(['session.cookie' => 'filament_session']);
+
+        return $panel            
             ->default()
             ->id('admin')
             ->path('admin')
+            ->authGuard('filament')
             ->login()
             ->colors([
                 'primary' => Color::Orange,
