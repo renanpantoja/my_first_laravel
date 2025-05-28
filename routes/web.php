@@ -57,3 +57,14 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::delete('/logout', [SessionController::class, 'destroy'])->middleware('auth');
+
+Route::get('/lang/{locale}', function ($locale) {
+    if (! in_array($locale, ['en', 'pt'])) {
+        abort(400);
+    }
+
+    session(['locale' => $locale]);
+    app()->setLocale($locale);
+
+    return back();
+})->name('lang.switch');

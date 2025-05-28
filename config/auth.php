@@ -72,7 +72,7 @@ return [
 
         'filament_users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class, // ou Admin, se quiser
+            'model' => App\Models\User::class,
         ],
     ],
 

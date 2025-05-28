@@ -19,29 +19,44 @@
                 </a>
             </div>
             <div class="space-x-6 font-bold">
-                <a href="/">Jobs</a>
-                <a href="/jobs/salaries">Salaries</a>
-                <a href="/employers">Companies</a>
+                <a href="/">{{ expression('home.jobs') }}</a>
+                <a href="/jobs/salaries">{{ expression('nav.salaries') }}</a>
+                <a href="/employers">{{ expression('nav.companies') }}</a>
             </div>
 
+
+            <div class="space-x-6 font-bold flex">
             @auth
-                <div class="space-x-6 font-bold flex">
-                    <a href="/my-jobs">My Jobs</a>
-                    <a href="/jobs/create">Post a Job</a>
-                    <form method="POST" action="/logout">
-                        @csrf
-                        @method('DELETE')
-                        <button>Log Out</button>
-                    </form>
-                </div>
+                <a href="/my-jobs">My Jobs</a>
+                <a href="/jobs/create">Post a Job</a>
+                <form method="POST" action="/logout">
+                    @csrf
+                    @method('DELETE')
+                    <button>Log Out</button>
+                </form>
             @endauth
 
             @guest
-                <div class="space-x-6 font-bold">
-                    <a href="/register">Sign Up</a>
-                    <a href="/login">Log In</a>
-                </div>
+                <a href="/register">Sign Up</a>
+                <a href="/login">Log In</a>
             @endguest
+            
+                <button
+                    id="lang-toggle"
+                    class="bg-white text-black font-bold py-2 px-4 rounded inline-flex items-center"
+                    onclick="document.getElementById('lang-menu').classList.toggle('hidden')">
+                    {{ strtoupper(app()->getLocale()) }}
+                    <svg class="ml-2 h-4 w-4 fill-current" viewBox="0 0 20 20">
+                        <path d="M5.516 7.548l4.484 4.482 4.484-4.482L16 8.516 10 14.516 4 8.516z"/>
+                    </svg>
+                </button>
+                <ul
+                    id="lang-menu"
+                    class="absolute right-0 mt-2 w-28 bg-white text-black rounded shadow-lg hidden z-50">
+                    <li><a href="/lang/en" class="block px-4 py-2 hover:bg-gray-200">EN</a></li>
+                    <li><a href="/lang/pt" class="block px-4 py-2 hover:bg-gray-200">PT</a></li>
+                </ul>
+            </div>
         </nav>
 
         <main class="px-10 mt-10 max-w-[986px] mx-auto">
