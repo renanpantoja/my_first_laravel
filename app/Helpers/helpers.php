@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Helpers;
+
 use App\Models\Expression;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;

@@ -35,6 +35,6 @@ class JobStoreRequest extends FormRequest
             'schedule.in' => __('messages.job_schedule_invalid'),
             'url.required' => __('messages.job_url_required'),
             'url.active_url' => __('messages.job_url_invalid'),
-        ];      
+        ];
     }
 }

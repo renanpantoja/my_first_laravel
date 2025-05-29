@@ -1,0 +1,79 @@
+name: learning-renan
+recipe: laravel
+config:
+  php: '8.4'
+  via: nginx
+  database: mysql
+  ssl: true
+  xdebug: false
+  webroot: public
+  composer_version: 2-latest
+services:
+  appserver:
+    scanner: false
+    run:
+      - composer install
+      - cp -vir .env.example .env
+      - php artisan key:generate
+      - php artisan storage:link
+      - php artisan migrate:fresh --seed
+  appserver_nginx:
+    scanner:
+      path: /healthcheck
+      timeout: 1000
+      retry: 1
+      okCodes: [200]
+  mailhog:
+    type: mailhog
+    portforward: true
+    hogfrom:
+      - appserver
+  database:
+    type: mysql:8.0
+  node:
+    type: node:18
+    scanner: false
+    run:
+      - npm install
+      - npm run build
+proxy:
+  appserver_nginx:
+    - learning-renan.lndo.site
+    - learning-renan.test
+  node:
+    - bs.learning-renan.lndo.site
+    - bs.learning-renan.test
+  mailhog:
+    - mail.learning-renan.lndo.site
+tooling:
+  npm:
+    service: node
+  node:
+    service: node
+  phpstan:
+    service: appserver
+    cmd: /app/vendor/bin/phpstan
+  phpcs:
+    service: appserver
+    cmd: /app/vendor/bin/phpcs
+  phpcbf:
+    service: appserver
+    cmd: /app/vendor/bin/phpcbf
+  phpmd:
+    service: appserver
+    cmd: /app/vendor/bin/phpmd
+  pint:
+    service: appserver
+    cmd: /app/vendor/bin/pint
+  code-test:
+    service: appserver
+    cmd:
+      - /app/vendor/bin/pint
+      - /app/vendor/bin/phpcbf
+      - /app/vendor/bin/phpstan analyse
+      - /app/vendor/bin/phpcs -n
+      - /app/vendor/bin/phpunit
+  code-fix:
+    service: appserver
+    cmd:
+      - /app/vendor/bin/pint

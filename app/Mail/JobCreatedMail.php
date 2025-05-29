@@ -2,17 +2,16 @@
 
 namespace App\Mail;
 
+use App\Models\Job;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Job;
 
 class JobCreatedMail extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $job;
 
@@ -24,6 +23,6 @@ class JobCreatedMail extends Mailable implements ShouldQueue
     public function build()
     {
         return $this->subject('Nova vaga criada!')
-                    ->view('emails.job-created');
+            ->view('emails.job-created');
     }
 }

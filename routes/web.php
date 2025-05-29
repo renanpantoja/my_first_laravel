@@ -1,15 +1,15 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\EmployerController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
-use Illuminate\Auth\Events\Registered;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TagController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +21,11 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/healthcheck', function () {
+    return response()->json(
+        status: Response::HTTP_OK
+    );
+})->name('healthcheck');
 
 Route::get('/', [JobController::class, 'index']);
 Route::get('/employers', [EmployerController::class, 'index'])->name('employers.index');

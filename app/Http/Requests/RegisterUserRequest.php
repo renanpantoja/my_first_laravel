@@ -45,6 +45,6 @@ class RegisterUserRequest extends FormRequest
             'logo.required' => __('messages.register_logo_required'),
             'logo.max' => __('messages.register_logo_max'),
             'logo.mimes' => __('messages.register_logo_mimes'),
-        ];    
+        ];
     }
 }

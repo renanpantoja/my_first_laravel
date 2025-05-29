@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreJobRequest;
-use App\Http\Requests\UpdateJobRequest;
+use App\Http\Requests\JobDeleteRequest;
+use App\Http\Requests\JobStoreRequest;
+use App\Http\Requests\JobUpdateRequest;
 use App\Models\Job;
 use App\Models\Tag;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
-use App\Http\Requests\JobStoreRequest;
-use App\Http\Requests\JobDeleteRequest;
-use App\Http\Requests\JobUpdateRequest;
-use Illuminate\Http\RedirectResponse;
 
 class JobController extends Controller
 {
@@ -22,7 +17,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        //$jobs = Job::latest()->with(['employer', 'tags'])->get()->groupBy('featured');
+        // $jobs = Job::latest()->with(['employer', 'tags'])->get()->groupBy('featured');
         $featuredJobs = Job::where('featured', true)
             ->latest()
             ->with(['employer', 'tags'])
@@ -55,18 +50,18 @@ class JobController extends Controller
     {
         $attributes = $request->validated();
         $attributes['featured'] = $request->has('featured');
-    
+
         $job = Auth::user()
             ->employer
             ->jobs()
             ->create(Arr::except($attributes, 'tags'));
-    
+
         if ($attributes['tags'] ?? false) {
             foreach (explode(',', $attributes['tags']) as $tag) {
                 $job->tag(trim($tag));
             }
         }
-    
+
         return redirect('/');
     }
 
@@ -78,17 +73,17 @@ class JobController extends Controller
             ->pluck('salary');
 
         return view('jobs.salaries', [
-            'salaries' => $salaries
+            'salaries' => $salaries,
         ]);
     }
 
     public function jobsBySalary($salary)
     {
         $jobs = Job::where('salary', $salary)
-                    ->with(['employer', 'tags'])
-                    ->latest()
-                    ->get();
-    
+            ->with(['employer', 'tags'])
+            ->latest()
+            ->get();
+
         return view('results', [
             'jobs' => $jobs,
             'salary' => $salary,
@@ -99,7 +94,7 @@ class JobController extends Controller
     {
         $employer = auth()->user()->employer;
 
-        if (!$employer) {
+        if (! $employer) {
             abort(403, 'Você não está associado a uma empresa.');
         }
 
@@ -134,19 +129,19 @@ class JobController extends Controller
     {
         $attributes = $request->validated();
         $attributes['featured'] = $request->has('featured');
-    
+
         $attributes = Arr::except($attributes, ['tags']);
-    
+
         $job->update($attributes);
-    
+
         if ($request->filled('tags')) {
             $job->tags()->detach();
-    
+
             foreach (explode(',', $request->input('tags')) as $tag) {
                 $job->tag(trim($tag));
             }
         }
-    
+
         return redirect()->route('my-jobs')->with('success', 'Job updated successfully.');
     }
 }

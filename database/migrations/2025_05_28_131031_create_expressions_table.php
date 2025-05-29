@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('locale', 5);
             $table->text('value');
             $table->timestamps();
-    
+
             $table->unique(['key', 'locale']);
         });
-    }    
+    }
 
     /**
      * Reverse the migrations.

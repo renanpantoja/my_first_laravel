@@ -9,6 +9,7 @@ class JobUpdateRequest extends FormRequest
     public function authorize(): bool
     {
         $job = $this->route('job');
+
         return $job && $this->user()->id === optional($job->employer)->user_id;
     }
 

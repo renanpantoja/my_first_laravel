@@ -1,0 +1,3 @@
+services:
+  database:
+    portforward: 32826

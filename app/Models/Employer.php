@@ -31,7 +31,7 @@ class Employer extends Model
             $count = 1;
 
             while (static::where('slug', $employer->slug)->exists()) {
-                $employer->slug = $originalSlug . '-' . $count++;
+                $employer->slug = $originalSlug.'-'.$count++;
             }
         });
     }

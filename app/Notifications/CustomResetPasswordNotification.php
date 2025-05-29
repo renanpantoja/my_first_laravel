@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Notifications\Notification;
-use Illuminate\Notifications\Messages\MailMessage;
 
 class CustomResetPasswordNotification extends Notification
 {
@@ -25,7 +24,7 @@ class CustomResetPasswordNotification extends Notification
             'token' => $this->token,
             'email' => $notifiable->getEmailForPasswordReset(),
         ], false));
-    
+
         return (new \Illuminate\Notifications\Messages\MailMessage)
             ->subject('Reset Your Password')
             ->view('emails.password-reset', [
@@ -33,5 +32,4 @@ class CustomResetPasswordNotification extends Notification
                 'user' => $notifiable,
             ]);
     }
-    
 }

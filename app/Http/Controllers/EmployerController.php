@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Employer;
 
 class EmployerController extends Controller
@@ -12,7 +11,7 @@ class EmployerController extends Controller
         $employers = Employer::withCount('jobs')->latest()->get();
 
         return view('employers.index', [
-            'employers' => $employers
+            'employers' => $employers,
         ]);
     }
 

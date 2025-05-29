@@ -17,7 +17,7 @@ it('belongs to an employer', function () {
 });
 
 it('can have tags', function () {
-    //AAA
+    // AAA
 
     $job = Job::factory()->create();
 

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SessionStoreRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-use App\Http\Requests\SessionStoreRequest;
 
 class SessionController extends Controller
 {
@@ -36,13 +36,14 @@ class SessionController extends Controller
     public function store(SessionStoreRequest $request)
     {
         $request->authenticate();
-    
+
         return redirect('/');
     }
 
     public function destroy()
     {
         Auth::logout();
+
         return redirect('/');
     }
 }

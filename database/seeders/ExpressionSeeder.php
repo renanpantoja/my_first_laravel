@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Expression;
+use Illuminate\Database\Seeder;
 
 class ExpressionSeeder extends Seeder
 {
@@ -33,7 +33,7 @@ class ExpressionSeeder extends Seeder
 
             ['key' => 'nav.login', 'locale' => 'en', 'value' => 'Log In'],
             ['key' => 'nav.login', 'locale' => 'pt', 'value' => 'Logar'],
-            
+
             ['key' => 'nav.register', 'locale' => 'en', 'value' => 'Sign Up'],
             ['key' => 'nav.register', 'locale' => 'pt', 'value' => 'Criar Conta'],
 
