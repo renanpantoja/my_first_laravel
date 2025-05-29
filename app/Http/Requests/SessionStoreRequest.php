@@ -24,17 +24,17 @@ class SessionStoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'The email field is required.',
-            'email.email' => 'The provided email is not valid.',
-            'password.required' => 'The password field is required.',
-        ];        
+            'email.required' => __('messages.email_required'),
+            'email.email' => __('messages.email_invalid'),
+            'password.required' => __('messages.password_required'),
+        ];
     }
 
     public function authenticate(): void
     {
         if (! Auth::attempt($this->only('email', 'password'))) {
             throw ValidationException::withMessages([
-                'email' => 'Your provided credentials do not match.',
+                'email' => __('messages.auth_failed'),
             ]);
         }
 

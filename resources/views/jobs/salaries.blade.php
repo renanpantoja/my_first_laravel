@@ -1,9 +1,9 @@
 <x-layout>
     <div class="container mx-auto py-8">
-        <h1 class="text-3xl font-bold mb-6">List of Available Salaries</h1>
+        <h1 class="text-3xl font-bold mb-6">{{ __('messages.jobs.salaries_title') }}</h1>
 
         @if($salaries->isEmpty())
-            <p class="text-gray-600">No salary recorded.</p>
+            <p class="text-gray-600">{{ __('messages.jobs.salaries_no_salaries') }}</p>
         @else
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 @foreach ($salaries as $salary)
@@ -11,7 +11,7 @@
                         <p class="text-xl font-semibold text-gray-800">
                             {{ $salary }}
                         </p>
-                        <p class="text-gray-500 mt-2">View vacancies</p>
+                        <p class="text-gray-500 mt-2">{{ __('messages.jobs.salaries_vacancies_list') }}</p>
                     </a>
                 @endforeach
             </div>

@@ -1,11 +1,11 @@
 <x-layout>
-  <x-page-heading>Log In</x-page-heading>
+  <x-page-heading>{{ __('messages.login.title') }}</x-page-heading>
 
   <x-forms.form method="POST" action="/login">
-    <x-forms.input label="Email" name="email" type="email" />
-    <x-forms.input label="Password" name="password" type="password" />
+    <x-forms.input label="{{ __('messages.login.email') }}" name="email" type="email" />
+    <x-forms.input label="{{ __('messages.login.password') }}" name="password" type="password" />
     
-    <x-forms.button>Log In</x-forms.button>
-    <x-forms.link href="{{ route('password.request') }}">Forgot Password?</x-forms.link>
+    <x-forms.button>{{ __('messages.login.button') }}</x-forms.button>
+    <x-forms.link href="{{ route('password.request') }}">{{ __('messages.login.forgot') }}</x-forms.link>
   </x-forms.form>
 </x-layout>

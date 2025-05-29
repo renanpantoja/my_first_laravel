@@ -35,16 +35,16 @@ class RegisterUserRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'The name is required.',
-            'email.required' => 'The email is required.',
-            'email.email' => 'The email must be a valid email address.',
-            'email.unique' => 'This email is already in use.',
-            'password.required' => 'The password is required.',
-            'password.confirmed' => 'The passwords do not match.',
-            'employer.required' => 'The employer name is required.',
-            'logo.required' => 'The logo upload is required.',
-            'logo.max' => 'The image must be at most 2MB.',
-            'logo.mimes' => 'The image must be a file of type: png, jpg, or webp.',
-        ];        
+            'name.required' => __('messages.register_name_required'),
+            'email.required' => __('messages.register_email_required'),
+            'email.email' => __('messages.register_email_invalid'),
+            'email.unique' => __('messages.register_email_unique'),
+            'password.required' => __('messages.register_password_required'),
+            'password.confirmed' => __('messages.register_password_mismatch'),
+            'employer.required' => __('messages.register_employer_required'),
+            'logo.required' => __('messages.register_logo_required'),
+            'logo.max' => __('messages.register_logo_max'),
+            'logo.mimes' => __('messages.register_logo_mimes'),
+        ];    
     }
 }

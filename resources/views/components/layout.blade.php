@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Find Jobs</title>
+    <title>{{ expression('page.title') }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -19,7 +19,7 @@
                 </a>
             </div>
             <div class="space-x-6 font-bold">
-                <a href="/">{{ expression('home.jobs') }}</a>
+                <a href="/">{{ expression('nav.jobs') }}</a>
                 <a href="/jobs/salaries">{{ expression('nav.salaries') }}</a>
                 <a href="/employers">{{ expression('nav.companies') }}</a>
             </div>
@@ -27,18 +27,18 @@
 
             <div class="space-x-6 font-bold flex">
             @auth
-                <a href="/my-jobs">My Jobs</a>
-                <a href="/jobs/create">Post a Job</a>
+                <a href="/my-jobs">{{ expression('nav.myjobs') }}</a>
+                <a href="/jobs/create">{{ expression('nav.postjobs') }}</a>
                 <form method="POST" action="/logout">
                     @csrf
                     @method('DELETE')
-                    <button>Log Out</button>
+                    <button>{{ expression('nav.logout') }}</button>
                 </form>
             @endauth
 
             @guest
-                <a href="/register">Sign Up</a>
-                <a href="/login">Log In</a>
+                <a href="/register">{{ expression('nav.register') }}</a>
+                <a href="/login">{{ expression('nav.login') }}</a>
             @endguest
             
                 <button
