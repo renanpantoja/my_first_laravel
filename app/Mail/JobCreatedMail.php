@@ -10,19 +10,18 @@ use Illuminate\Queue\SerializesModels;
 
 class JobCreatedMail extends Mailable implements ShouldQueue
 {
-    use Queueable;
-    use SerializesModels;
+    use Queueable, SerializesModels;
 
-    public $job;
+    public Job $job;
 
     public function __construct(Job $job)
     {
         $this->job = $job;
     }
 
-    public function build()
+    public function build(): self
     {
         return $this->subject('Nova vaga criada!')
-            ->view('emails.job-created');
+                    ->view('emails.job-created');
     }
 }

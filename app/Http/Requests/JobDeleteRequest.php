@@ -14,6 +14,9 @@ class JobDeleteRequest extends FormRequest
         return Auth::check() && $job->employer->user_id === Auth::id();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [];

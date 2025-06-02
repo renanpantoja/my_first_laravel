@@ -9,9 +9,12 @@ class JobStoreRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true; // ou aplique lógica de autorização, se necessário
+        return true;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [
@@ -25,6 +28,9 @@ class JobStoreRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function messages(): array
     {
         return [

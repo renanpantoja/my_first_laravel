@@ -12,8 +12,11 @@ class SendJobCreatedEmail
     {
         $job = $event->job;
 
-        $user = $job->employer->user;
+        // Usa acesso seguro para evitar erros caso employer ou user sejam nulos
+        $user = $job->employer?->user;
 
-        Mail::to($user->email)->queue(new JobCreatedMail($job));
+        if ($user) {
+            Mail::to($user->email)->queue(new JobCreatedMail($job));
+        }
     }
 }

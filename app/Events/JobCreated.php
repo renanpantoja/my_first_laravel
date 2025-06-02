@@ -13,7 +13,7 @@ class JobCreated
     use InteractsWithSockets;
     use SerializesModels;
 
-    public $job;
+    public Job $job;
 
     public function __construct(Job $job)
     {

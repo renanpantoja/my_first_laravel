@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employer;
+use Illuminate\View\View;
 
 class EmployerController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $employers = Employer::withCount('jobs')->latest()->get();
 
@@ -15,7 +16,7 @@ class EmployerController extends Controller
         ]);
     }
 
-    public function jobs(Employer $employer)
+    public function jobs(Employer $employer): View
     {
         $jobs = $employer->jobs()->with(['employer', 'tags'])->latest()->get();
 

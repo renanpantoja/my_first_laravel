@@ -6,41 +6,24 @@ use App\Http\Requests\SessionStoreRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class SessionController extends Controller
 {
-    public function create()
+    public function create(): View
     {
         return view('auth.login');
     }
 
-    /*
-    public function store()
-    {
-        $attributes = request()->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-
-        if (! Auth::attempt($attributes)){
-            throw ValidationException::withMessages([
-                'email' => 'Your provided credentials not match.'
-            ]);
-        }
-
-        request()->session()->regenerate();
-
-        return redirect('/');
-    }*/
-
-    public function store(SessionStoreRequest $request)
+    public function store(SessionStoreRequest $request): RedirectResponse
     {
         $request->authenticate();
 
         return redirect('/');
     }
 
-    public function destroy()
+    public function destroy(): RedirectResponse
     {
         Auth::logout();
 

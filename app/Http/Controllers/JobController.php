@@ -9,15 +9,13 @@ use App\Models\Job;
 use App\Models\Tag;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class JobController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): View
     {
-        // $jobs = Job::latest()->with(['employer', 'tags'])->get()->groupBy('featured');
         $featuredJobs = Job::where('featured', true)
             ->latest()
             ->with(['employer', 'tags'])
@@ -35,18 +33,12 @@ class JobController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(): View
     {
         return view('jobs.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(JobStoreRequest $request)
+    public function store(JobStoreRequest $request): RedirectResponse
     {
         $attributes = $request->validated();
         $attributes['featured'] = $request->has('featured');
@@ -56,16 +48,19 @@ class JobController extends Controller
             ->jobs()
             ->create(Arr::except($attributes, 'tags'));
 
-        if ($attributes['tags'] ?? false) {
-            foreach (explode(',', $attributes['tags']) as $tag) {
-                $job->tag(trim($tag));
+        if (!empty($attributes['tags'])) {
+            $tags = explode(',', $attributes['tags']);
+            foreach ($tags as $tagName) {
+                $tagName = trim($tagName);
+                $tag = Tag::firstOrCreate(['name' => $tagName]);
+                $job->tags()->attach($tag->id);
             }
         }
 
         return redirect('/');
     }
 
-    public function salaries()
+    public function salaries(): View
     {
         $salaries = Job::select('salary')
             ->distinct()
@@ -77,7 +72,7 @@ class JobController extends Controller
         ]);
     }
 
-    public function jobsBySalary($salary)
+    public function jobsBySalary(int|string $salary): View
     {
         $jobs = Job::where('salary', $salary)
             ->with(['employer', 'tags'])
@@ -90,7 +85,7 @@ class JobController extends Controller
         ]);
     }
 
-    public function myJobs()
+    public function myJobs(): View
     {
         $employer = auth()->user()->employer;
 
@@ -107,14 +102,14 @@ class JobController extends Controller
         ]);
     }
 
-    public function destroy(JobDeleteRequest $request, Job $job)
+    public function destroy(JobDeleteRequest $request, Job $job): RedirectResponse
     {
         $job->delete();
 
         return redirect()->route('my-jobs')->with('success', 'Job deleted successfully.');
     }
 
-    public function edit(Job $job)
+    public function edit(Job $job): View
     {
         if ($job->employer->user_id !== auth()->id()) {
             abort(403);
@@ -125,7 +120,7 @@ class JobController extends Controller
         ]);
     }
 
-    public function update(JobUpdateRequest $request, Job $job)
+    public function update(JobUpdateRequest $request, Job $job): RedirectResponse
     {
         $attributes = $request->validated();
         $attributes['featured'] = $request->has('featured');
@@ -137,8 +132,11 @@ class JobController extends Controller
         if ($request->filled('tags')) {
             $job->tags()->detach();
 
-            foreach (explode(',', $request->input('tags')) as $tag) {
-                $job->tag(trim($tag));
+            $tags = explode(',', $request->input('tags'));
+            foreach ($tags as $tagName) {
+                $tagName = trim($tagName);
+                $tag = Tag::firstOrCreate(['name' => $tagName]);
+                $job->tags()->attach($tag->id);
             }
         }
 

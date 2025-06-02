@@ -13,6 +13,9 @@ class JobUpdateRequest extends FormRequest
         return $job && $this->user()->id === optional($job->employer)->user_id;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [
