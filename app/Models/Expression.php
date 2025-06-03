@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Expression extends Model
 {
-    use HasFactory;
+    // Não use HasFactory se não tem factory
 }

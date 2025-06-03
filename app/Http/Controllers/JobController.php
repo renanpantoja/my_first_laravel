@@ -53,6 +53,7 @@ class JobController extends Controller
             foreach ($tags as $tagName) {
                 $tagName = trim($tagName);
                 $tag = Tag::firstOrCreate(['name' => $tagName]);
+                /** @var \App\Models\Job $job */
                 $job->tags()->attach($tag->id);
             }
         }
@@ -87,20 +88,21 @@ class JobController extends Controller
 
     public function myJobs(): View
     {
-        $employer = auth()->user()->employer;
-
-        if (! $employer) {
+        /** @var \App\Models\Employer|null $employer */
+        $employer = optional(auth()->user())->employer;
+    
+        if ($employer === null) {
             abort(403, 'Você não está associado a uma empresa.');
         }
-
+    
         $jobs = $employer->jobs()->with(['employer', 'tags'])->get();
-
+    
         return view('results', [
             'jobs' => $jobs,
             'employer' => $employer,
             'myJobs' => true,
         ]);
-    }
+    }    
 
     public function destroy(JobDeleteRequest $request, Job $job): RedirectResponse
     {
@@ -111,7 +113,10 @@ class JobController extends Controller
 
     public function edit(Job $job): View
     {
-        if ($job->employer->user_id !== auth()->id()) {
+        /** @var \App\Models\Employer|null $employer */
+        $employer = $job->employer;
+
+        if (! $employer || $employer->user_id !== auth()->id()) {
             abort(403);
         }
 
