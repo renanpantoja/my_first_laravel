@@ -12,12 +12,7 @@ class JobCreatedMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public Job $job;
-
-    public function __construct(Job $job)
-    {
-        $this->job = $job;
-    }
+    public function __construct(public Job $job) {}
 
     public function build(): self
     {

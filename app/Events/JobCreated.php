@@ -9,14 +9,7 @@ use Illuminate\Queue\SerializesModels;
 
 class JobCreated
 {
-    use Dispatchable;
-    use InteractsWithSockets;
-    use SerializesModels;
+    use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public Job $job;
-
-    public function __construct(Job $job)
-    {
-        $this->job = $job;
-    }
+    public function __construct(public Job $job) {}
 }

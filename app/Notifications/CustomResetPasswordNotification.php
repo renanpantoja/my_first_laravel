@@ -11,12 +11,7 @@ use Illuminate\Contracts\Auth\CanResetPassword;
  */
 class CustomResetPasswordNotification extends Notification
 {
-    public string $token;
-
-    public function __construct(string $token)
-    {
-        $this->token = $token;
-    }
+    public function __construct(public string $token) {}
 
     /**
      * @param mixed $notifiable
