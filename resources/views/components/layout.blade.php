@@ -27,6 +27,7 @@
 
             <div class="space-x-6 font-bold flex">
             @auth
+                <a href="{{ route('api.token.show') }}" class="text-sm text-gray-700 underline">API Token</a>
                 <a href="/my-jobs">{{ expression('nav.myjobs') }}</a>
                 <a href="/jobs/create">{{ expression('nav.postjobs') }}</a>
                 <form method="POST" action="/logout">

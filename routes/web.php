@@ -11,6 +11,8 @@ use App\Http\Controllers\TagController;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\JobController as ApiJobController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +48,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])->name('jobs.edit');
     Route::put('/jobs/{job}', [JobController::class, 'update'])->name('jobs.update');
     Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy');
+
+
+    Route::get('/api-token', function () {
+        return view('api.token', ['user' => Auth::user()]);
+    })->name('api.token.show');
+
+    Route::post('/api-token', function (Request $request) {
+        $user = $request->user();
+
+        // Revoga tokens antigos se quiser
+        // $user->tokens()->delete();
+
+        $token = $user->createToken('user-generated-token')->plainTextToken;
+
+        return back()->with('token', $token);
+    })->name('api.token.generate');
 });
 
 Route::middleware('guest')->group(function () {

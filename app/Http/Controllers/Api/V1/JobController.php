@@ -9,6 +9,12 @@ use Illuminate\Http\JsonResponse;
 
 class JobController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+    }
+    
     public function index(Request $request): JsonResponse
     {
         $query = Job::with(['employer', 'tags']);
