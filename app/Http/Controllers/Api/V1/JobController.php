@@ -6,19 +6,38 @@ use App\Http\Controllers\Controller;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Laravel\Passport\Token;
 
 class JobController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth:sanctum');
+        $this->middleware(function ($request, $next) {
+            if (auth('sanctum')->check()) {
+                return $next($request);
+            }
+    
+            if (auth('external-api')->check()) {
+                return $next($request);
+            }
+    
+            return response()->json(['message' => 'Unauthorized'], 401);
+        });
     }
     
     public function index(Request $request): JsonResponse
     {
         $query = Job::with(['employer', 'tags']);
-    
+
+        $user = auth('sanctum')->user();
+
+        // Se o token for de um usuário com employer, filtra os jobs desse employer
+        if ($user && $user->employer) {
+            $query->where('employer_id', $user->employer->id);
+        }
+
+        // Filtros
         if ($request->has('tags')) {
             $tagNames = explode(',', $request->input('tags'));
             $query->whereHas('tags', function ($q) use ($tagNames) {
@@ -64,5 +83,5 @@ class JobController extends Controller
             'last_page' => $jobsPaginated->lastPage(),
             'data' => $jobsPaginated->items(),
         ]);
-    }     
+    }
 }

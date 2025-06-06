@@ -50,6 +50,12 @@ return [
             'driver' => 'sanctum',
             'provider' => 'users',
         ],
+
+        'external-api' => [
+            'driver' => 'passport',
+            'provider' => 'users',
+            'hash' => false,
+        ],
     ],
 
     /*
