@@ -17,13 +17,21 @@ class JobController extends Controller
             if (auth('sanctum')->check()) {
                 return $next($request);
             }
-    
+        
             if (auth('external-api')->check()) {
                 return $next($request);
             }
-    
+        
+            if (auth('api')->check() || auth()->guard('api')->check()) {
+                return $next($request);
+            }
+        
+            if (auth()->guard('api')->guest() && $request->user() === null && $request->bearerToken()) {
+                return $next($request); // Deixa passar mesmo sem user
+            }
+        
             return response()->json(['message' => 'Unauthorized'], 401);
-        });
+        });        
     }
     
     public function index(Request $request): JsonResponse
