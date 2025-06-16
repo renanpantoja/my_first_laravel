@@ -27,7 +27,7 @@ class JobController extends Controller
             }
         
             if (auth()->guard('api')->guest() && $request->user() === null && $request->bearerToken()) {
-                return $next($request); // Deixa passar mesmo sem user
+                return $next($request);
             }
         
             return response()->json(['message' => 'Unauthorized'], 401);
@@ -38,14 +38,13 @@ class JobController extends Controller
     {
         $query = Job::with(['employer', 'tags']);
 
+        /** @var \App\Models\User|null $user */
         $user = auth('sanctum')->user();
 
-        // Se o token for de um usuário com employer, filtra os jobs desse employer
-        if ($user && $user->employer) {
+        if ($user && isset($user->employer)) {
             $query->where('employer_id', $user->employer->id);
         }
 
-        // Filtros
         if ($request->has('tags')) {
             $tagNames = explode(',', $request->input('tags'));
             $query->whereHas('tags', function ($q) use ($tagNames) {
