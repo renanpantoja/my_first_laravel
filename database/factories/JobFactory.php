@@ -24,7 +24,7 @@ class JobFactory extends Factory
             'location' => 'Remote',
             'schedule' => 'Full-time',
             'url' => fake()->url(),
-            'featured' => fake()->boolean(),
+            'featured' => false,
         ];
     }
 }

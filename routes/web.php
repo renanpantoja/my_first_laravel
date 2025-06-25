@@ -57,9 +57,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/api-token', function (Request $request) {
         $user = $request->user();
 
-        // Revoga tokens antigos se quiser
-        // $user->tokens()->delete();
-
         $token = $user->createToken('user-generated-token')->plainTextToken;
 
         return back()->with('token', $token);
